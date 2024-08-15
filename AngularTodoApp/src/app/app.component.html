@@ -1,0 +1,18 @@
+﻿<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+
+<div>
+  <input #newTodo type="text" placeholder="Nova tarefa">
+  <button (click)="addTodo(newTodo.value); newTodo.value=''">Adicionar</button>
+</div>
+
+<ul *ngIf="items.length > 0">
+  <li *ngFor="let todo of items;">
+    <input type="checkbox" [checked]="todo.completed" (click)="markComplete(todo.id)">
+    {{ todo.title }}
+    <button (click)="removeTodo(todo.id)">Remover</button>
+  </li>
+</ul>
