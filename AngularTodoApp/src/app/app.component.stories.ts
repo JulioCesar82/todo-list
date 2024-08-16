@@ -1,43 +1,70 @@
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
 
 //import { TodoListComponent } from './todo-list.component';
 import { AppComponent } from './app.component';
-import { Todo } from 'my-todolist-package';
+import { Todo, TodoList } from 'my-todolist-package';
 
-export default {
+class FakeAppComponent extends AppComponent
+{
+  constructor(todoList: TodoList) {
+    super(undefined);
+
+    this.todoList = todoList;
+  }
+} 
+
+const meta: Meta<AppComponent> = {
   title: 'TodoListComponent',
   component: AppComponent,
-  decorators: [
-    moduleMetadata({
-      declarations: [AppComponent],
-      imports: [CommonModule],
-    }),
-  ],
-} as Meta;
-
-const Template: Story<AppComponent> = (args: AppComponent) => ({
-  component: AppComponent,
-  props: args,
-});
-
-export const Empty = Template.bind({});
-Empty.args = {
-  todos: [],
+  // decorators: [
+  //   moduleMetadata({
+  //     declarations: [AppComponent],
+  //     imports: [CommonModule],
+  //   }),
+  // ],
 };
 
-export const WithTodos = Template.bind({});
-WithTodos.args = {
-  todos: [
-    new Todo(1, 'Learn Angular'),
-    new Todo(2, 'Learn Storybook'),
-  ],
+export default meta;
+
+type Story = StoryObj<AppComponent>;
+
+export const Empty: Story = {
+  render: (args: AppComponent) => ({
+    props: {
+      ...args,
+      todoList: new TodoList()
+    }
+  }),
+  // args: {
+  //   todoList: new TodoList()
+  // }
 };
 
-export const AllCompleted = Template.bind({});
-AllCompleted.args = {
-  todos: [
-    new Todo (1, 'Learn Angular', true),
-    new Todo (2, 'Learn Storybook', true),
-  ],
+export const WithTodos: Story = {
+  render: (args: AppComponent) => ({
+    props: {
+      ...args,
+      todoList: new TodoList([ 'Learn Angular', 'Learn Storybook' ])
+    }
+  }),
+  // args: {
+  //   todoList: new TodoList([ 'Learn Angular', 'Learn Storybook' ])
+  // }
+};
+
+const allCompletedTodoList = new TodoList([ 'Learn Angular', 'Learn Storybook' ]);
+allCompletedTodoList.markTodoComplete(1);
+allCompletedTodoList.markTodoComplete(2);
+
+export const AllCompleted: Story = {
+  render: (args: AppComponent) => ({
+    props: {
+      ...args,
+      todoList: allCompletedTodoList
+    }
+  }),
+  // args: {
+  //   todoList: allCompletedTodoList
+  // }
 };

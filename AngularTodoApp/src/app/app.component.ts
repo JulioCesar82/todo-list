@@ -27,9 +27,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todoList.addTodo('Aprender Angular');
-    this.todoList.addTodo('Criar um App com Angular');
-
     this.errorService?.error.subscribe(error => {
       alert(error);
     });
