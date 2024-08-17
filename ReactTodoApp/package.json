@@ -1,6 +1,6 @@
 {
-  "name": "seu-nome-projeto",
-  "version": "0.1.0",
+  "name": "next-todo-app",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,10 +9,10 @@
     "lint": "next lint",
     "server": "npm run build && node server.js",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook:build": "storybook build"
   },
   "dependencies": {
-    "my-todolist-package": "file:../TodoListPackage/dist",
+    "my-todolist-package": "file:../TodoListPackage",
 
     "express": "^4.19.2",
     "next": "^14.2.5",

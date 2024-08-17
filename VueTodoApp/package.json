@@ -1,6 +1,6 @@
 {
-  "name": "vuetodoapp",
-  "version": "0.0.0",
+  "name": "vue-todo-app",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -30,7 +30,7 @@
     "@vue/test-utils": "^2.4.6",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
-    "my-todolist-package": "file:../TodoListPackage/dist",
+    "my-todolist-package": "file:../TodoListPackage",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4",
     "vite": "^5.3.1",

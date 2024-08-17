@@ -2,7 +2,7 @@ import Todo from '../models/todo';
 import ITodoList from './interface';
 
 class TodoList implements ITodoList {
-  private todos: Todo[] = [];
+  protected todos: Todo[] = [];
   private nextId: number = 1;
 
   constructor (todos: string[] = [])
