@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "start": "next dev",
     "build": "next build",
-    "start": "next start",
+    "server:next": "next start",
     "lint": "next lint",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "server": "npm run build && node server.js",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build"
@@ -29,6 +32,7 @@
     "@storybook/nextjs": "^8.2.8",
     "@storybook/react": "^8.2.8",
     "@storybook/test": "^8.2.8",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -42,6 +46,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "storybook": "^8.2.8",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   },
   "browserslist": [

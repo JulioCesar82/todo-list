@@ -38,8 +38,15 @@ const Home = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const handleAddTodo = () => {
-    todoList.addTodo(newTodo);
-    setNewTodo('');
+    try
+    {
+      todoList.addTodo(newTodo);
+      setNewTodo('');
+    }
+    catch (err: any)
+    {
+      alert(err?.message);
+    }
   };
 
   const handleMarkComplete = (id: number) => {
