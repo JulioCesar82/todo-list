@@ -1,18 +1,18 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
-import { CommonModule } from '@angular/common';
+// import { CommonModule } from '@angular/common';
 
 //import { TodoListComponent } from './todo-list.component';
 import { AppComponent } from './app.component';
 import { Todo, TodoList } from 'my-todolist-package';
 
-class FakeAppComponent extends AppComponent
-{
-  constructor(todoList: TodoList) {
-    super(undefined);
+// class FakeAppComponent extends AppComponent
+// {
+//   constructor(todoList: TodoList) {
+//     //super(undefined);
 
-    this.todoList = todoList;
-  }
-} 
+//     this.todoList = todoList;
+//   }
+// } 
 
 const meta: Meta<AppComponent> = {
   title: 'TodoListComponent',
@@ -62,6 +62,21 @@ export const AllCompleted: Story = {
     props: {
       ...args,
       todoList: allCompletedTodoList
+    }
+  }),
+  // args: {
+  //   todoList: allCompletedTodoList
+  // }
+};
+
+const mixedTodoList = new TodoList([ 'Learn Angular', 'Learn Storybook' ]);
+mixedTodoList.markTodoComplete(2);
+
+export const MixedTodos: Story = {
+  render: (args: AppComponent) => ({
+    props: {
+      ...args,
+      todoList: mixedTodoList
     }
   }),
   // args: {

@@ -1,39 +1,72 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
-import TodoList from './index';
+import { Meta, StoryObj } from '@storybook/react';
+
+import { Todo, TodoList } from 'my-todolist-package';
+import TodoListComponent, { ObservableTodoList } from './index';
+
+class FakeTodoListComponent extends TodoListComponent
+{
+
+  private list: string[] = []
+
+  constructor(props: any) {
+    
+    super(undefined);
+
+    //// this.setState({...this.state, ...{todos}});
+    // this.state = {...this.state, ...props};
+
+    // todo: gambiarra
+    const todos = props.todoList.getTodos(false);
+
+    this.list = todos.map(todo => todo.title);
+  }
+
+  componentDidMount() {
+
+    this.state.todoList.addTodos(this.list);
+  }
+} 
+
 
 export default {
-  title: 'TodoList',
-  component: TodoList,
+  title: 'TodoListComponent',
+  component: FakeTodoListComponent,
 } as Meta;
 
-const Template: Story = (args) => <TodoList {...args} />;
+type Story = StoryObj<FakeTodoListComponent>;
 
-export const Empty = Template.bind({});
-Empty.args = {
-  todos: [],
+export const Empty: Story = {
+  args: 
+  {
+    todoList: new TodoList()
+  }
 };
 
-export const WithTodos = Template.bind({});
-WithTodos.args = {
-  todos: [
-    { id: 1, title: 'Learn Next.js', completed: false },
-    { id: 2, title: 'Learn Storybook', completed: false },
-  ],
+export const WithTodos: Story = {
+  args: 
+  {
+    todoList: new TodoList([ 'Learn Angular', 'Learn Storybook' ])
+  }
 };
 
-export const AllCompleted = Template.bind({});
-AllCompleted.args = {
-  todos: [
-    { id: 1, title: 'Learn Next.js', completed: true },
-    { id: 2, title: 'Learn Storybook', completed: true },
-  ],
+const allCompletedTodoList = new TodoList([ 'Learn Angular', 'Learn Storybook' ]);
+allCompletedTodoList.markTodoComplete(1);
+allCompletedTodoList.markTodoComplete(2);
+
+export const AllCompleted: Story = {
+  args: 
+  {
+    todoList: allCompletedTodoList
+  }
 };
 
-export const MixedTodos = Template.bind({});
-MixedTodos.args = {
-  todos: [
-    { id: 1, title: 'Learn Next.js', completed: true },
-    { id: 2, title: 'Learn Storybook', completed: false },
-  ],
+const mixedTodoList = new TodoList([ 'Learn Angular', 'Learn Storybook' ]);
+mixedTodoList.markTodoComplete(2);
+
+export const MixedTodos: Story = {
+  args: 
+  {
+    todoList: mixedTodoList
+  }
 };

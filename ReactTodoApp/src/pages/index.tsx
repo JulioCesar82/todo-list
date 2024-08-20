@@ -1,89 +1,115 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer, Component } from 'react';
 import { Todo, TodoList } from 'my-todolist-package';
 
-const Home = () => {
-  class ObservableTodoList extends TodoList
-  {
-    constructor() {
-      super();
+const generateObservableProxy = <T extends object>(defaultValue: T, action: CallableFunction) => 
+  new Proxy<T>(defaultValue, {
+    set: (target, prop, val) => { 
+      const setAction = target[prop] = val;
 
-      this.todos = new Proxy<Todo[]>([], {
-          set: (target, key, val) => { 
-            const setAction = target[key] = val;
+      action();
 
-            setTodos(this.getTodos(false));
+      return setAction;
+    },
 
-            return setAction;
-          },
+    get: (target, prop, receiver) => {
 
-          get: (tgt, prop, rcvr) => {
-            if (prop === 'splice') {
-              const origMethod = tgt[prop];
-  
-              return (...args) => {
-                origMethod.apply(tgt, args);
+      const getValue = target[prop];
 
-                setTodos(this.getTodos(false));
-              }
-            }
+      // todo: gambiarra loop infinito se habilitar chamada de todas as Functions
+      const validMethods = ['splice'];
+      
+      // if (typeof getValue === 'function') {
+      if (validMethods.includes(prop)) {
 
-            return tgt[prop];
+        return (...args) => {
+          action();
+
+          getValue.apply(target, args);
         }
-      })
+      }
+
+      return getValue;
     }
+  });
+
+export class ObservableTodoList extends TodoList
+{
+  constructor(action: CallableFunction, todos: string[] = []) {
+    super(todos);
+
+    this.todos = generateObservableProxy<Todo[]>([], action);
+  }
+}
+
+class Home extends Component {
+  
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      newTodo: '',
+      todoList: new ObservableTodoList(() => {
+        this.setState({...this.state, ...{todos: this.state.todoList.getTodos(false)} });
+      }),
+      todos: []
+    };
   }
 
-  const [newTodo, setNewTodo] = useState<string>('');
-  const [todoList] = useState<TodoList>(new ObservableTodoList());
-  const [todos, setTodos] = useState<Todo[]>([]);
-
-  const handleAddTodo = () => {
+  handleAddTodo = () => {
     try
     {
-      todoList.addTodo(newTodo);
-      setNewTodo('');
+      this.state.todoList.addTodo(this.state.newTodo);
+
+      // todo: gambiarra
+      setTimeout(() => 
+        this.setState({...this.state, ...{newTodo: ''}}),
+        50);
     }
     catch (err: any)
     {
       alert(err?.message);
     }
-  };
+  }
 
-  const handleMarkComplete = (id: number) => {
-    todoList.markTodoComplete(id);
-  };
+  handleMarkComplete = (id: number) => {
+    this.state.todoList.markTodoComplete(id);
+  }
 
-  const handleRemoveTodo = (id: number) => {
-    todoList.removeTodo(id);
-  };
+  handleRemoveTodo = (id: number) => {
+    this.state.todoList.removeTodo(id);
+  }
 
-  return (
-    <div>
-      <h1>Todo Next App</h1>
+  render() {
+    const { newTodo, todos } = this.state;
+
+    return (
       <div>
-        <input 
-          type="text" 
-          placeholder="New task" 
-          value={newTodo} 
-          onChange={(e) => setNewTodo(e.target.value)} 
-        />
-        <button onClick={handleAddTodo}>Add</button>
+        <h1>Todo Next App</h1>
+        <div>
+          <input 
+            type="text" 
+            placeholder="New task" 
+            value={newTodo} 
+            onChange={(e) => this.setState({...this.state, ...{newTodo: e.target.value}})}
+          />
+          <button onClick={this.handleAddTodo}>Add</button>
+        </div>
+        <ul style={{ listStyleType: 'none', padding: 0 }}>
+          {todos.map(todo => (
+            <li key={todo.id}>
+              <input 
+                type="checkbox" 
+                checked={todo.completed} 
+                onChange={() => this.handleMarkComplete(todo.id)} 
+              />
+              {todo.title}
+              <button onClick={() => this.handleRemoveTodo(todo.id)}>Remove</button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul style={{ listStyleType: 'none', padding: 0 }}>
-        {todos.map(todo => (
-          <li key={todo.id}>
-            <input 
-              type="checkbox" 
-              checked={todo.completed} 
-              onChange={() => handleMarkComplete(todo.id)} 
-            />
-            {todo.title}
-            <button onClick={() => handleRemoveTodo(todo.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    );
+  }
 };
 
 export default Home;
