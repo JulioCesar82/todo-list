@@ -8,6 +8,14 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  optimizeDeps: {
+    include: ['my-todolist-package'],
+  },
+  build: {
+    commonjsOptions: {
+      include: [/my-todolist-package/, /node_modules/],
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
