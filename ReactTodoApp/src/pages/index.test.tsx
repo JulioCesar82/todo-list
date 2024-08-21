@@ -10,10 +10,12 @@ describe('Home', () => {
 
   it('adds a new todo', () => {
     render(<Home />);
+
+    const todoTitle = 'New Todo';
   
-    fireEvent.change(screen.getByPlaceholderText('New task'), { target: { value: 'New Todo' } });
+    fireEvent.change(screen.getByPlaceholderText('New task'), { target: { value: todoTitle } });
     fireEvent.click(screen.getByText('Add'));
   
-    expect(screen.getByText('New Todo')).toBeInTheDocument();
+    expect(screen.getByText(todoTitle)).toBeInTheDocument();
   });
 });
