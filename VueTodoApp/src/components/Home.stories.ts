@@ -1,44 +1,65 @@
-﻿import { Meta, Story } from '@storybook/vue3';
-import TodoList from './Home.vue';
+﻿import type { Meta, StoryObj } from '@storybook/vue3'
 
-export default {
-  title: 'TodoList',
-  component: TodoList,
-} as Meta;
+import TodoListComponent, { Component } from './Home.vue'
+import { Todo, TodoList } from 'my-todolist-package'
 
-const Template: Story = (args) => ({
-  components: { TodoList },
-  setup() {
-    return { args };
-  },
-  template: '<TodoList v-bind="args" />',
-});
+const FakeTodoListComponent = {
+  ...Component,
+  mounted() {
+    setInterval(() => {
+      Object.entries(this.$attrs).forEach(([key, value]) => {
+        if (this[key] && this[key] !== value) {
+          this[key] = value
+        }
+      })
+    }, 50)
+  }
+}
 
-export const Empty = Template.bind({});
+const meta = {
+  title: 'TodoListComponent',
+  component: FakeTodoListComponent
+} as Meta
+
+export default meta
+
+//type Story = StoryObj<typeof meta>;
+
+// export default Story;
+
+const Template = (args: any, { argTypes }: any) => ({
+  components: { TodoListComponent: FakeTodoListComponent },
+  template: '<TodoListComponent  v-bind="allPropsFromArgs" />',
+  props: {
+    allPropsFromArgs: {
+      default: () => args
+    }
+  }
+})
+
+export const Empty = Template.bind({})
 Empty.args = {
-  todos: [],
-};
+  todoList: new TodoList()
+}
 
-export const WithTodos = Template.bind({});
+export const WithTodos = Template.bind({})
 WithTodos.args = {
-  todos: [
-    { id: 1, title: 'Learn Vue.js', completed: false },
-    { id: 2, title: 'Learn Storybook', completed: false },
-  ],
-};
+  todoList: new TodoList(['Learn Angular', 'Learn Storybook'])
+}
 
-export const AllCompleted = Template.bind({});
+const allCompletedTodoList = new TodoList(['Learn Angular', 'Learn Storybook'])
+allCompletedTodoList.markTodoComplete(1)
+allCompletedTodoList.markTodoComplete(2)
+
+export const AllCompleted = Template.bind({})
 AllCompleted.args = {
-  todos: [
-    { id: 1, title: 'Learn Vue.js', completed: true },
-    { id: 2, title: 'Learn Storybook', completed: true },
-  ],
-};
+  todoList: allCompletedTodoList
+}
 
-export const MixedTodos = Template.bind({});
+const mixedTodoList = new TodoList(['Learn Angular', 'Learn Storybook'])
+mixedTodoList.markTodoComplete(2)
+
+export const MixedTodos = Template.bind({})
 MixedTodos.args = {
-  todos: [
-    { id: 1, title: 'Learn Vue.js', completed: true },
-    { id: 2, title: 'Learn Storybook', completed: false },
-  ],
-};
+  todoList: mixedTodoList
+}

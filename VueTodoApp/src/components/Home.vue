@@ -25,7 +25,7 @@ import { defineComponent } from 'vue';
 import ErrorBoundary from './Error.vue';
 import { TodoList } from 'my-todolist-package';
 
-export default defineComponent({
+const context = {
   name: 'Home',
   data() {
     return {
@@ -43,7 +43,7 @@ export default defineComponent({
         this.todoList.addTodo(this.newTodo);
         this.newTodo = '';
       }
-      catch (err) {
+      catch (err: any) {
         alert(err.message)
       }
     },
@@ -54,7 +54,11 @@ export default defineComponent({
   components: {
     ErrorBoundary
   },
-});
+};
+
+export { context as Component };
+
+export default defineComponent(context);
 </script>
 
 <style scoped>
