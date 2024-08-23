@@ -11,4 +11,4 @@ Este pacote JavaScript tem como objetivo armazenar a camada de negócios, que ne
 
 ## Modelos de Dados
 
-- [Todo](.src/models/todo.ts).
+- [Todo](./src/models/todo.ts).
