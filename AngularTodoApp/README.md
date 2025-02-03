@@ -1,3 +1,47 @@
+# História do Angular
+
+Usava o zonejs, depois migrou para o RxJs e agora Signals.
+
+Usa o Vite: Servidor de desenvolvimento local escrito por Evan You, o criador do Vue.js, e usado por padrão pelo Vue e para modelos de projeto React. Possui suporte para TypeScript e JSX. Ele usa Rollup e esbuild internamente para empacotamento.
+O servidor Vite entrega o código bruto em ESM para o navegador (<script type="module">), mas isso não é bom para ambiente de Produção.  
+
+
+# Pré Requisito
+
+Primeiro é preciso buildar o pacote 'TodoListPackage'
+
+
+# Configuração de debug completa. Para usar:
+
+No VSCode:
+
+1) Feche o VSCode
+
+- Abra o diretório AngularTodoApp
+- Use "File > Add Folder to Workspace" e adicione o diretório TodoListPackage
+- Salve o workspace (File > Save Workspace As...)
+
+2) Para iniciar a depuração:
+
+- Coloque breakpoints no código do TodoListPackage (src/todoItem/element-definition.ts)
+- Pressione F5 ou selecione "Debug Full Stack" no menu Run and Debug
+- O Chrome abrirá automaticamente
+- O TodoListPackage será compilado antes do debug (via tasks.json)
+- Os breakpoints serão ativados quando o código for executado
+
+3) Configurações implementadas:
+
+- Source maps configurados para mapear corretamente o código do pacote
+- Skip patterns configurados para não ignorar os arquivos do pacote
+- Build automático do pacote antes do debug
+- Mapeamento correto dos caminhos do workspace
+
+Você pode agora depurar o código do TodoListPackage junto com o código Angular, com os breakpoints funcionando em ambos os projetos.
+
+
+
+-----
+
 # AngularTodoApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.

@@ -3,7 +3,7 @@ import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 
 //import { TodoListComponent } from './todo-list.component';
 import { AppComponent } from './app.component';
-import { Todo, TodoList } from 'my-todolist-package';
+import { TodoItem, TodoList } from 'my-todolist-package';
 
 // class FakeAppComponent extends AppComponent
 // {
@@ -54,8 +54,8 @@ export const WithTodos: Story = {
 };
 
 const allCompletedTodoList = new TodoList([ 'Learn Angular', 'Learn Storybook' ]);
-allCompletedTodoList.markTodoComplete(1);
-allCompletedTodoList.markTodoComplete(2);
+allCompletedTodoList.markTodoItemComplete(1);
+allCompletedTodoList.markTodoItemComplete(2);
 
 export const AllCompleted: Story = {
   render: (args: AppComponent) => ({
@@ -70,7 +70,7 @@ export const AllCompleted: Story = {
 };
 
 const mixedTodoList = new TodoList([ 'Learn Angular', 'Learn Storybook' ]);
-mixedTodoList.markTodoComplete(2);
+mixedTodoList.markTodoItemComplete(2);
 
 export const MixedTodos: Story = {
   render: (args: AppComponent) => ({

@@ -1,8 +1,8 @@
-class Todo {
+class TodoItem {
     constructor(
         public id: number,
         public title: string,
         public completed: boolean = false) {}
 }
 
-export default Todo;
+export default TodoItem;

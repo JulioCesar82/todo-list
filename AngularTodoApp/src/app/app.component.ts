@@ -1,13 +1,15 @@
-﻿import { Component, OnInit, ChangeDetectorRef, ErrorHandler } from '@angular/core';
+﻿import { Component, OnInit, ChangeDetectorRef, ErrorHandler, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Todo, TodoList } from 'my-todolist-package';
+
 import { ErrorService } from './error.service';
+import { TodoItem, TodoList } from 'my-todolist-package';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [],
   imports: [CommonModule],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   standalone: true,
   providers: [{ provide: ErrorHandler, useClass: ErrorService }]
 })
@@ -17,8 +19,8 @@ export class AppComponent implements OnInit {
 
   private errorService?: ErrorService;
 
-  get items(): Todo[] {
-    return this.todoList.getTodos(false);
+  get items(): TodoItem[] {
+    return this.todoList.getTodoItems(false);
   }
 
   constructor(errorService?: ErrorService) {
@@ -33,13 +35,13 @@ export class AppComponent implements OnInit {
   }
 
   markComplete(id: number) {
-    this.todoList.markTodoComplete(id);
+    this.todoList.markTodoItemComplete(id);
   }
 
-  addTodo(title: string) {
+  addTodoItem(title: string) {
     try
     {
-      this.todoList.addTodo(title);
+      this.todoList.addTodoItem(title);
     }
     catch (err: any)
     {
@@ -47,7 +49,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  removeTodo(id: number) {
-    this.todoList.removeTodo(id);
+  removeTodoItem(id: number) {
+    this.todoList.removeTodoItem(id);
   }
 }

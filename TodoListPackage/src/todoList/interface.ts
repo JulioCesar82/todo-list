@@ -1,11 +1,11 @@
-import Todo from '../models/todo';
+import TodoItem from '../todoItem';
 
-interface ITodoListService {
-  addTodo: (title: string) => Todo;
-  addTodos: (titles: string[]) => Todo[];
-  removeTodo: (id: number) => boolean;
-  markTodoComplete: (id: number) => boolean;
-  getTodos: (showCompleted?: boolean) => Todo[];
+interface ITodoList {
+  addTodoItem: (title: string) => TodoItem;
+  addTodoItems: (titles: string[]) => TodoItem[];
+  removeTodoItem: (id: number) => boolean;
+  markTodoItemComplete: (id: number) => boolean;
+  getTodoItems: (showCompleted?: boolean) => TodoItem[];
 }
 
-export default ITodoListService;
+export default ITodoList;

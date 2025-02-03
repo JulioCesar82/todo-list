@@ -51,12 +51,17 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*.html",
+                "input": "../TodoListPackage/src",
+                "output": "/assets/todolist-package"
               }
             ],
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+           "scripts": [] 
           },
           "configurations": {
             "production": {
@@ -77,7 +82,12 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": {
+                "scripts": true,
+                "styles": true,
+                "vendor": true
+              },
+              "preserveSymlinks": true
             }
           },
           "defaultConfiguration": "production"

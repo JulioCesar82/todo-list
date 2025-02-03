@@ -1,0 +1,48 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Angular Application",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${workspaceFolder}/src/*",
+        "webpack:///./node_modules/*": "${workspaceFolder}/node_modules/*",
+        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+        "webpack://my-todolist-package/src/*": "${workspaceFolder}/../TodoListPackage/src/*",
+        "webpack://my-todolist-package/*": "${workspaceFolder}/../TodoListPackage/*",
+        "webpack://my-todolist-package/./src/*": "${workspaceFolder}/../TodoListPackage/src/*",
+        "webpack://my-todolist-package/./*": "${workspaceFolder}/../TodoListPackage/*",
+        "webpack:///./TodoListPackage/src/*": "${workspaceFolder}/../TodoListPackage/src/*",
+        "webpack:///*": "*",
+        "webpack:///./*": "${workspaceFolder}/*"
+      },
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/../TodoListPackage/**",
+        "${workspaceFolder}/node_modules/my-todolist-package/**",
+        "!**/node_modules/**"
+      ],
+      "skipFiles": [
+        "${workspaceFolder}/node_modules/**/*.js",
+        "!${workspaceFolder}/node_modules/my-todolist-package/**",
+        "<node_internals>/**/*.js"
+      ],
+      "trace": true,
+      "pathMapping": {
+        "/": "${workspaceFolder}",
+        "/base/": "${workspaceFolder}/"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": ["Debug Angular Application"],
+      "preLaunchTask": "npm: build - TodoListPackage"
+    }
+  ]
+}
