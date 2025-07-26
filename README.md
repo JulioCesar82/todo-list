@@ -1,5 +1,3 @@
-# Super README.md da Aplicação `todo-list`
-
 ## Visão Geral do Projeto
 
 Este repositório, `todo-list`, foi criado para demonstrar a separação entre a camada de negócios (o "Core") e a camada de apresentação (o "FrontEnd"). O objetivo é ter uma base de código de negócios que seja independente de qualquer framework de UI, permitindo que a lógica principal seja reutilizada em diferentes tecnologias de frontend.
