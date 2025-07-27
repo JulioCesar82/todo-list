@@ -129,6 +129,11 @@ Cada aplicação frontend se conecta ao `TodoListPackage` para gerenciar os dado
   npm run storybook
   ```
 
+## Membros atuais da equipe do projeto
+
+* [JulioCesar82](https://github.com/JulioCesar82) -
+**Julio Ávila** <https://www.linkedin.com/in/juliocesar82>
+
 ## Como Contribuir
 
 1.  **Faça um Fork** do repositório.
